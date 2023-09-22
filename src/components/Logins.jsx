@@ -31,7 +31,43 @@ const Logins = () => {
     }else{setErrPass('')}
 
     if(!errFlag){
-      alert('you are logged in')
+    
+        const postobj={
+          email,
+          password
+        }
+    
+        const json = JSON.stringify(postobj)
+    
+        const url = 'http://localhost:8000/api/login'
+        const obj = {
+            method: 'POST',
+            headers: 
+            {
+                "Content-Type": "application/json",
+                "Accept": 'application/json'
+            },
+            body: json
+          }
+    
+          const loginAPI =async ()=>{
+            const response = await fetch(url,obj)
+            const result = await response.json()
+            if(result.error){
+              if(result.email_err){
+                setErrEmail(result.email_err)
+              }else{
+
+              setErrPass(result.pass_err)
+              }
+            }else{
+
+              localStorage.setItem('user-info',JSON.stringify(result.data))
+              history.push('/home')
+            }
+          }
+    
+          loginAPI()
     }
   }
 
@@ -49,7 +85,7 @@ const Logins = () => {
           <p className="errorMsg">{errEmail}</p>
         </div>
         <div className="pt-4">
-          <label className="" htmlFor="Password">
+          <label className="" htmlFor="password">
             Password
           </label>
           <input className="form-control"  onChange={(e)=>setPassword(e.target.value)} value={password} type="password" required name="password" id="password" />
