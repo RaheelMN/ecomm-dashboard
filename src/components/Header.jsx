@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+
 const Header = () => {
   const history = useHistory();
   let userName = "";
@@ -24,9 +25,8 @@ const Header = () => {
         <Nav className="me-auto navbar_wrapper">
           {islocal ? (
             <>
-              <Link to="/home">Home</Link>
+              <Link to="/">Home</Link>
               <Link to="/add">Add Product</Link>
-              <Link to="/update">Update Product</Link>
             </>
           ) : (
             <>
