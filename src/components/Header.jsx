@@ -1,7 +1,8 @@
 import React from "react";
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import {AiOutlineSearch} from 'react-icons/ai'
+import "./header.css"
 const Header = ({ishome,setProducts}) => {
   const history = useHistory();
   let userName = "";
@@ -38,8 +39,8 @@ const Header = ({ishome,setProducts}) => {
         <Nav className="me-auto navbar_wrapper">
           {islocalStorage ? (
             <>
-              <Link to="/home">Home</Link>
-              <Link to="/add">Add Product</Link>
+              <NavLink to="/home" activeClassName="selected">Home</NavLink>
+              <NavLink to="/add" activeClassName="selected">Add Product</NavLink>
             </>
           ) : (
             <>
