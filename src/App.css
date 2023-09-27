@@ -8,3 +8,24 @@
     color:red;
     font-size: 14px;
 }
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.search-bar{
+    border:2px solid #676666;
+    display: flex;
+    gap: 2px;
+    padding: 0px 5px;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+}
+
+.search-icon{
+    color: rgb(101, 99, 99);
+    font-size: 27px;
+}
+

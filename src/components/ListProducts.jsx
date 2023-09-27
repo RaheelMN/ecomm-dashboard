@@ -17,7 +17,6 @@ const ListProducts = () => {
   const getProducts = async () => {
     const response = await fetch("http://localhost:8000/api/viewProducts");
     const json = await response.json();
-    console.log(json);
     setProducts(json);
   };
 
@@ -38,7 +37,7 @@ const ListProducts = () => {
 
   return (
     <div>
-      <Header />
+      <Header ishome={true} setProducts={setProducts} />
       <h4 className="text-center mt-4">Products table</h4>
       <Table striped bordered hover className="w-75 mx-auto mt-4 text-center">
         <thead>

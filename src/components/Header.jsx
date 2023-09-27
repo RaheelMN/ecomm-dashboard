@@ -1,14 +1,14 @@
 import React from "react";
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-
-const Header = () => {
+import {AiOutlineSearch} from 'react-icons/ai'
+const Header = ({ishome,setProducts}) => {
   const history = useHistory();
   let userName = "";
-  let islocal = false;
+  let islocalStorage = false;
 
   if (localStorage.getItem("user-info")) {
-    islocal = true;
+    islocalStorage = true;
     const obj = JSON.parse(localStorage.getItem("user-info"));
     console.log("localstorg" + obj.name);
     userName = obj.name;
@@ -18,14 +18,27 @@ const Header = () => {
     history.push("/login");
   };
 
+  const getProducts = async (searchTerm) => {
+    if(searchTerm !== ''){
+      const response = await fetch(`http://localhost:8000/api/searchProduct/${searchTerm}`);
+      const json = await response.json();
+      setProducts(json);
+    }else{
+      const response = await fetch("http://localhost:8000/api/viewProducts");
+      const json = await response.json();
+      setProducts(json);      
+    }
+  };
+
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="#home">Fast77</Navbar.Brand>
         <Nav className="me-auto navbar_wrapper">
-          {islocal ? (
+          {islocalStorage ? (
             <>
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
               <Link to="/add">Add Product</Link>
             </>
           ) : (
@@ -35,8 +48,13 @@ const Header = () => {
             </>
           )}
         </Nav>
-        <Nav>
-          {islocal ? (
+        <Nav className="align-items-center">
+          {ishome?
+          <div className="search-bar">
+          <AiOutlineSearch className="search-icon"/>
+          <input onChange={(e)=>getProducts(e.target.value)} className="form_control" style={{borderWidth:0,backgroundColor:"transparent",marginLeft:"5px"}} type="text" name="" id="" placeholder="Search product"/>
+          </div>:null}
+          {islocalStorage ? (
             <NavDropdown title={userName}>
               <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
             </NavDropdown>
